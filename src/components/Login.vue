@@ -5,11 +5,11 @@
     <form @submit.prevent="handleLogin">
       <div>
         <label for="email">Email:</label>
-        <input type="email" v-model="email" required />
+        <input type="email" v-model="user.email" required />
       </div>
       <div>
         <label for="password">Password:</label>
-        <input type="password" v-model="password" required />
+        <input type="password" v-model="user.password" required />
       </div>
       <button type="submit">Login</button>
     </form>
@@ -17,17 +17,29 @@
 </template>
 
 <script>
+import apiAuthen from "@/services/api";
+
 export default {
   data() {
     return {
-      email: "",
-      password: "",
+      user: {
+        email: "",
+        password: "",
+      },
     };
   },
   methods: {
-    handleLogin() {
+    async handleLogin() {
       // Handle login logic here
       console.log("Login:", this.email, this.password);
+      await apiAuthen
+        .postData("/login", this.user)
+        .then((response) => {
+          console.log("Response:", response.data);
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
     },
   },
 };
