@@ -12,6 +12,7 @@
 export default {
   name: "App",
 };
+console.log("heheh", process.env.Base_URL);
 </script>
 
 <style>
