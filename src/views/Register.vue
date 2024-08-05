@@ -79,7 +79,7 @@
             >
             <input
               type="text"
-              v-model="user.phoneNumber"
+              v-model="user.phone_number"
               class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
               required
             />
@@ -108,7 +108,7 @@ export default {
         password: "",
         confirmPassword: "",
         address: "",
-        phoneNumber: "",
+        phone_number: "",
       },
     };
   },
@@ -126,6 +126,7 @@ export default {
         .postData("/register", this.user)
         .then((response) => {
           console.log("Response:", response.data);
+          this.$router.push("/Login");
         })
         .catch((error) => {
           console.error("Error:", error);

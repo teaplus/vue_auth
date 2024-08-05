@@ -74,10 +74,10 @@ export default {
       }
     },
     async logout() {
-      clearCookieAuth();
-
       await apiAuthen.postData("/logout").then((response) => {
         console.log("logout", response.data);
+        clearCookieAuth();
+
         this.$router.push("/Login");
       });
       console.log("User logged out");
@@ -86,19 +86,4 @@ export default {
 };
 </script>
 
-<style scoped>
-h1 {
-  color: #42b983;
-}
-button {
-  background-color: #42b983;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  cursor: pointer;
-  border-radius: 5px;
-}
-button:hover {
-  background-color: #339870;
-}
-</style>
+<style></style>
