@@ -39,6 +39,12 @@
           >
             Login
           </button>
+          <div v-if="errorMessage" class="text-red-500 mb-4">
+            {{ errorMessage }}
+          </div>
+          <div v-if="successMessage" class="text-green-500 mb-4">
+            {{ successMessage }}
+          </div>
         </form>
       </div>
     </div>
@@ -55,6 +61,8 @@ export default {
         username_or_email: "",
         password: "",
       },
+      errorMessage: "",
+      successMessage: "",
     };
   },
   methods: {
@@ -72,6 +80,7 @@ export default {
           this.$router.push("/");
         })
         .catch((error) => {
+          this.errorMessage = "Login fail, username or password wrong!";
           console.error("Error:", error);
         });
     },

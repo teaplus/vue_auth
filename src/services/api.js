@@ -1,6 +1,6 @@
 import axios from "axios";
 import Cookies from "js-cookie";
-let urlApi = process.env.VUE_APP_API_URL || "http://localhost:8080/v1/api/";
+let urlApi = process.env.VUE_APP_API_URL || "http://localhost:8081/v1/api/";
 
 // Tạo một instance của Axios với cấu hình cơ bản
 export const callAPIWithToken = axios.create({

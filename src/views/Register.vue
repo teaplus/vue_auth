@@ -91,6 +91,12 @@
         >
           Register
         </button>
+        <div v-if="errorMessage" class="text-red-500 mb-4">
+          {{ errorMessage }}
+        </div>
+        <div v-if="successMessage" class="text-green-500 mb-4">
+          {{ successMessage }}
+        </div>
       </form>
     </div>
   </div>
@@ -110,6 +116,8 @@ export default {
         address: "",
         phone_number: "",
       },
+      errorMessage: "",
+      successMessage: "",
     };
   },
   created() {
@@ -117,19 +125,22 @@ export default {
   },
   methods: {
     async handleRegister() {
-      // Handle registration logic here
-      if (this.password !== this.confirmPassword) {
-        alert("Passwords do not match!");
+      this.errorMessage = "";
+
+      if (this.user.password !== this.user.confirmPassword) {
+        this.errorMessage = "Passwords do not match!";
         return;
       }
       await apiAuthen
         .postData("/register", this.user)
         .then((response) => {
           console.log("Response:", response.data);
+          this.successMessage = "Register success!";
           this.$router.push("/Login");
         })
         .catch((error) => {
-          console.error("Error:", error);
+          this.errorMessage = "Register failed";
+          console.error("Error:", error.error);
         });
       console.log("Register:", this.user);
     },
