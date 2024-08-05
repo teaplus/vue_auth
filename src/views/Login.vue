@@ -9,13 +9,13 @@
         <form @submit.prevent="handleLogin" class="space-y-3">
           <div>
             <label
-              for="userName"
+              for="username_or_email"
               class="block text-sm font-medium text-gray-700"
               >Username:</label
             >
             <input
               type="text"
-              v-model="user.userName"
+              v-model="user.username_or_email"
               class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
               required
             />
@@ -46,13 +46,13 @@
 </template>
 
 <script>
-import apiAuthen from "@/services/api";
+import apiAuthen, { setCookieAuth } from "@/services/api";
 
 export default {
   data() {
     return {
       user: {
-        email: "",
+        username_or_email: "",
         password: "",
       },
     };
@@ -60,11 +60,16 @@ export default {
   methods: {
     async handleLogin() {
       // Handle login logic here
-      console.log("Login:", this.email, this.password);
       await apiAuthen
         .postData("/login", this.user)
         .then((response) => {
           console.log("Response:", response.data);
+          setCookieAuth(
+            response.data.token,
+            response.data.user_id,
+            response.data.client_id
+          );
+          this.$router.push("/");
         })
         .catch((error) => {
           console.error("Error:", error);

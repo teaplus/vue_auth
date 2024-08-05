@@ -1,18 +1,48 @@
 <template>
   <div id="app">
-    <nav>
-      <router-link to="/login">Login</router-link>
-      <router-link to="/register">Register</router-link>
-    </nav>
+    <header
+      class="bg-green-500 text-white p-5 text-center flex justify-between items-center min-h-16"
+    >
+      <nav v-if="!isLogin">
+        <router-link
+          to="/login"
+          class="mx-2 text-white bg-green-700 hover:bg-green-600 px-4 py-2 rounded"
+          >Login</router-link
+        >
+        <router-link
+          to="/register"
+          class="mx-2 text-white bg-green-700 hover:bg-green-600 px-4 py-2 rounded"
+          >Register</router-link
+        >
+      </nav>
+    </header>
+
     <router-view />
   </div>
 </template>
 
 <script>
+import Cookies from "js-cookie";
+
 export default {
   name: "App",
+  data() {
+    return {
+      isLogin: false,
+    };
+  },
+  mounted() {
+    this.checkLogin();
+  },
+  methods: {
+    checkLogin() {
+      const cookie = Cookies.get("accessToken");
+      if (cookie) {
+        this.isLogin = true;
+      }
+    },
+  },
 };
-console.log("heheh", process.env.Base_URL);
 </script>
 
 <style>
